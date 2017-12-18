@@ -43,7 +43,7 @@ void Object::generate()
 	x = 1 + rand() % 170;
 	y = 1 + rand() & 50;
 
-	int just_number = 1 + rand() % 10;
+	int just_number = 1 + rand() % 2;
 	if (just_number == 1)
 	{
 		type = "food";
@@ -55,7 +55,7 @@ void Object::generate()
 			// it's normal food
 			int food_health = 1 + rand() & 50;
 			health = food_health;
-			view = '2';
+			view = 'F';
 		}
 		if (food_number == 2)
 		{
@@ -69,13 +69,13 @@ void Object::generate()
 			//it's poisoned food
 			int food_health = 1 + rand() & 50;
 			health = -food_health;
-			view = '1';
+			view = 'f';
 		}
 	}
 	if (just_number == 2)
 	{
 		type == "plant";
-		int plant_number = 1 + rand() % 10;
+		int plant_number = 1 + rand() % 3;
 		if (plant_number == 1)
 		{
 			// it's herb
@@ -84,7 +84,7 @@ void Object::generate()
 		if (plant_number == 2)
 		{
 			// it's flower
-			view = 'F';
+			view = 'D';
 			int flower_type = 1 + rand() % 3;
 			if (flower_type == 1)
 			{
