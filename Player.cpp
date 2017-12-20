@@ -50,12 +50,14 @@ char Player::return_hero()
 Player::Player()
 {
 	hero = '@';
-	current_x = 4;
-	current_y = 4;
+	current_x = 4 + rand() & 50;
+	current_y = 4 + rand() & 50;
 	health = 100;
 	damage = 1;
 	armor = 10;
 	mana = 10;
+	energy = 100;
+	taken_items_weight = 0;
 }     
 
 

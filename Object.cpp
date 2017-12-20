@@ -28,15 +28,6 @@ string Object::get_type()
 {
 	return type;
 }
-bool Object::is_it_drawable()
-{
-	return drawable;
-}
-bool Object::set_drawableness(bool drawableness)
-{
-	drawable = drawableness;
-	return drawable;
-}
 void Object::generate()
 {
 	

@@ -27,9 +27,16 @@ void main()
 
 	while (GAME)
 	{
-		draw_game_info();
-		draw_game_screen();
-		enter_command(creatures);
+		if (hero.return_health() > 0)
+		{
+			draw_game_info();
+			draw_game_screen();
+			enter_command(creatures);
+			hero.energy = hero.energy - 1 - hero.taken_items_weight;
+		}
+		else {
+			cout << "                                              " << "GAME OVER" << endl;
+		}
 	}
 
 	_getch();
@@ -62,6 +69,8 @@ void draw_game_info()
 	cout << "DAMAGE:" << hero.return_damage() << endl;
 	cout << "ARMOR:" << hero.return_armor() << endl;
 	cout << "MANA:" << hero.return_mana() << endl;
+	cout << "ENERGY:" << hero.energy << endl;
+	cout << "TAKEN ITEMS' WEIGHT:" << hero.taken_items_weight << endl;
 }
 void enter_command(vector<Object> creatures)
 {
