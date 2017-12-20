@@ -8,9 +8,9 @@ private:
 	char view;
 	string type;
 	int shit;
-
+	int energy;
 public:
-
+	int get_energy();
 	int get_x_pos();
 	int get_y_pos();
 	int get_health();

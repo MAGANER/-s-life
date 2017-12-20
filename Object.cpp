@@ -1,5 +1,9 @@
 #include "Object.h"
 
+int Object::get_energy()
+{
+	return energy;
+}
 int Object::get_x_pos()
 {
 	return x;
