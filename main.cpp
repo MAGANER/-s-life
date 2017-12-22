@@ -10,9 +10,10 @@ Player hero;
 
 int turn = 0;
 bool GAME = true;
+bool clear_screen = true;
 
-void set_start_objects_poses(vector<Object>creatures);
-void enter_command(vector<Object> creatures);
+void set_start_objects_poses(vector<Object>& creatures);
+void enter_command(vector<Object>& creatures);
 void draw_game_info();
 void draw_game_screen();
 void main()
@@ -24,17 +25,25 @@ void main()
 	{
 		creatures[i].generate();
 	}
-	set_start_objects_poses(creatures);
 
 	while (GAME)
 	{
+		
 		if (hero.return_health() > 0)
 		{
-			draw_game_info();
-			draw_game_screen();
-			enter_command(creatures);
+			if (clear_screen)
+			{
+				set_start_objects_poses(creatures);
+				draw_game_info();
+				draw_game_screen();
+				enter_command(creatures);
+			}
 			hero.energy = hero.energy - 1 - hero.taken_items_weight;
 			turn++;
+			if (clear_screen)
+			{
+				system("cls");
+			}
 		}
 		else {
 			cout << "                                              " << "GAME OVER" << endl;
@@ -43,11 +52,17 @@ void main()
 
 	_getch();
 }
-void set_start_objects_poses(vector<Object>creatures)
+void set_start_objects_poses(vector<Object>& creatures)
 {
 	for (int i = 0; i < creatures.size(); i++)
 	{
-		map[creatures[i].get_y_pos()][creatures[i].get_x_pos()] = creatures[i].get_view();
+		if (creatures[i].show == true)
+		{
+			map[creatures[i].get_y_pos()][creatures[i].get_x_pos()] = creatures[i].get_view();
+		}
+		else {
+			map[creatures[i].get_y_pos()][creatures[i].get_x_pos()] = ' ';
+		}
 	}
 }
 void draw_game_screen()
@@ -75,7 +90,7 @@ void draw_game_info()
 	cout << "TAKEN ITEMS' WEIGHT:" << hero.taken_items_weight << endl;
 	cout << "TURN:" << turn << endl;
 }
-void enter_command(vector<Object> creatures)
+void enter_command(vector<Object>& creatures)
 {
 	cout << endl;
 	cout << "COMMANDS:" << endl;
@@ -85,40 +100,45 @@ void enter_command(vector<Object> creatures)
 	{
 		hero.set_y(hero.return_y() - 1);
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
+		clear_screen = true;
 	}
 	if (command == "go_down")
 	{
 		hero.set_y(hero.return_y() + 1);
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
+		clear_screen = true;
 	}
 	if (command == "go_right")
 	{
 		hero.set_x(hero.return_x() + 1);
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
+		clear_screen = true;
 	}
 	if (command == "go_left")
 	{
 		hero.set_x(hero.return_x() - 1);
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
+		clear_screen = true;
 	}
-	if (command == "take_item")
+	if (command == "take")
 	{
 		// character can take item if this item beside its
 		for (int counter = 0; counter < creatures.size(); counter++)
 		{
 			if (hero.return_x() + 1 == creatures[counter].get_x_pos() && hero.return_y() == creatures[counter].get_y_pos())
 			{
-				cout << "can take";
+				creatures[counter].fuck_away();
+				clear_screen = true;
 			}
 		}
 	}
-	if (command == "gg")
+	if (command == "show_invt")
 	{
-		for (int i = 0; i < creatures.size(); i++)
-		{
-		cout << creatures[i].get_x_pos() << endl;
-			
-		}
+		clear_screen = false;
+		enter_command(creatures);
 	}
-	system("cls");
+	if (command == "continue")
+	{
+		clear_screen = true;
+	}
 }

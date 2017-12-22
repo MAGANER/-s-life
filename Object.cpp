@@ -1,5 +1,18 @@
 #include "Object.h"
 
+void Object::fuck_away()
+{
+	view = ' ';
+	cout << view << endl;
+}
+string Object::get_type()
+{
+	return type;
+}
+int Object::get_weight()
+{
+	return weight;
+}
 int Object::get_energy()
 {
 	return energy;
@@ -28,10 +41,6 @@ char Object::get_view()
 {
 	return view;
 }
-string Object::get_type()
-{
-	return type;
-}
 void Object::generate()
 {
 	
@@ -42,6 +51,7 @@ void Object::generate()
 	if (just_number == 1)
 	{
 		type = "food";
+		weight = 1;
 		damage = 1; // yeap, we can use food as weapon and armor
 		armor = 1;
 		int food_number = 1 + rand() % 3;
@@ -69,6 +79,8 @@ void Object::generate()
 	}
 	if (just_number == 2)
 	{
+		energy = 1 + rand() & 50;
+		weight = 1;
 		type == "plant";
 		int plant_number = 1 + rand() % 3;
 		if (plant_number == 1)
@@ -107,7 +119,7 @@ void Object::generate()
 }
 Object::Object()
 {
-	
+	show = true;
 }
 Object::~Object()
 {

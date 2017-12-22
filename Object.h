@@ -9,7 +9,11 @@ private:
 	string type;
 	int shit;
 	int energy;
+	int weight;
 public:
+	bool show;
+	void fuck_away();
+	int get_weight();
 	int get_energy();
 	int get_x_pos();
 	int get_y_pos();
