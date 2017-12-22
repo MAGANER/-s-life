@@ -129,6 +129,7 @@ void enter_command(vector<Object>& creatures)
 		{
 			if (hero.return_x() + 1 == creatures[counter].get_x_pos() && hero.return_y() == creatures[counter].get_y_pos())
 			{
+				hero.taken_items_weight = creatures[counter].get_weight();
 				invt.add_item(creatures, counter);
 				creatures[counter].fuck_away();
 				clear_screen = true;
