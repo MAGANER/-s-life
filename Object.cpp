@@ -57,6 +57,7 @@ void Object::generate()
 		int food_number = 1 + rand() % 3;
 		if (food_number == 1)
 		{
+			type = "food";
 			energy = 10;
 			// it's normal food
 			int food_health = 1 + rand() & 50;
@@ -65,6 +66,7 @@ void Object::generate()
 		}
 		if (food_number == 2)
 		{
+			type = "shit";
 			energy = 1;
 			// it's shit
 			health = -2;
@@ -74,6 +76,7 @@ void Object::generate()
 		}
 		if (food_number == 3)
 		{
+			type = "poison";
 			energy = -1;
 			//it's poisoned food
 			int food_health = 1 + rand() & 50;
@@ -94,6 +97,11 @@ void Object::generate()
 		int plant_number = 1 + rand() % 3;
 		if (plant_number == 1)
 		{
+			health = 0;
+			energy = 1;
+			armor = 0;
+			damage = 0;
+			type = "herb";
 			// it's herb
 			view = '^';
 		}
@@ -104,6 +112,7 @@ void Object::generate()
 			int flower_type = 1 + rand() % 3;
 			if (flower_type == 1)
 			{
+				type = "Gloom flower";
 				// this flower can be used as reagent in alchemy for creating health potion
 				health = 1 + rand() % 10;
 				armor = 0;
@@ -111,6 +120,7 @@ void Object::generate()
 			}
 			if (flower_type == 2)
 			{
+				type = "Light flower";
 				// this flower can be used as reagent in alchemy for creating armor potion
 				health = 0;
 				armor = 1 + rand() % 10;
@@ -118,6 +128,7 @@ void Object::generate()
 			}
 			if (flower_type == 3)
 			{
+				type = "cursed flower";
 				// this flower can be used as reagent in alchemy for creating damage potion
 				health = 0;
 				armor = 0;
