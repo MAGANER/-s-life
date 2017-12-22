@@ -57,6 +57,7 @@ void Object::generate()
 		int food_number = 1 + rand() % 3;
 		if (food_number == 1)
 		{
+			energy = 10;
 			// it's normal food
 			int food_health = 1 + rand() & 50;
 			health = food_health;
@@ -64,21 +65,29 @@ void Object::generate()
 		}
 		if (food_number == 2)
 		{
+			energy = 1;
 			// it's shit
+			health = -2;
 			armor = 0;
 			damage = 3; // :Do u understand 
 			view = '~';
 		}
 		if (food_number == 3)
 		{
+			energy = -1;
 			//it's poisoned food
 			int food_health = 1 + rand() & 50;
+			armor = 0;
+			damage = 6; // :Do u understand 
 			health = -food_health;
 			view = 'f';
 		}
 	}
 	if (just_number == 2)
 	{
+		health = 1;
+		armor = 0;
+		damage = 0;
 		energy = 1 + rand() & 50;
 		weight = 1;
 		type == "plant";
