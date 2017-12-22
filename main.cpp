@@ -5,7 +5,9 @@
 #include"Player.h"
 #include<vector>
 #include"Object.h"
+#include"Inventory.h"
 
+Inventory invt;
 Player hero;
 
 int turn = 0;
@@ -127,6 +129,7 @@ void enter_command(vector<Object>& creatures)
 		{
 			if (hero.return_x() + 1 == creatures[counter].get_x_pos() && hero.return_y() == creatures[counter].get_y_pos())
 			{
+				invt.add_item(creatures, counter);
 				creatures[counter].fuck_away();
 				clear_screen = true;
 			}
@@ -134,6 +137,7 @@ void enter_command(vector<Object>& creatures)
 	}
 	if (command == "show_invt")
 	{
+		invt.show_inventory();
 		clear_screen = false;
 		enter_command(creatures);
 	}

@@ -1,47 +1,35 @@
 #include "Inventory.h"
 
-
-void Inventory::set_emptyness()
-{
-	empty = false;
-}
 void Inventory::show_inventory()
 {
-	for (int counter = 0; counter < items.size(); counter++)
+	if (is_empty() == false)
 	{
-		cout << counter << " Type:" << items[counter].get_type() << endl;
-		cout << counter << " Energy:" << items[counter].get_energy() << endl;
-		cout << counter << " Health:" << items[counter].get_health() << endl;
-		cout << counter << " Armor:" << items[counter].get_armor() << endl;
-		cout << counter << " Weight:" << items[counter].get_type() << endl;
-	}
-}
-bool Inventory::is_it_empty()
-{
-	if (empty == true)
-	{
-		return 1;
-	}
-}
-void Inventory::add_item(vector<Object> items, int item_number)
-{
-	if (items[item_number].get_weight() < max_weight)
-	{
-		items.push_back(items[item_number]);
-		cout << items[item_number].get_type() << endl;
+		for (int counter = 0; counter < items.size(); counter++)
+		{
+			cout << counter << " TYPE:" << items[counter].get_type();
+			cout << counter << " HEALTH:" << items[counter].get_health();
+			cout << counter << " ENERGY:" << items[counter].get_energy();
+			cout << counter << " WEIGHT:" << items[counter].get_weight();
+			cout << counter << " ARMOR:" << items[counter].get_armor();
+			cout << counter << " DAMAGE:" << items[counter].get_damage();
+		}
 	}
 	else {
-		cout << "it's so heavy to take! " << endl;
+		cout << "inventory is empty..." << endl;
 	}
 }
-int Inventory::get_weight()
+bool Inventory::is_empty()
 {
-	return weight;
+	return empty;
+}
+void Inventory::add_item(vector<Object>& creatures,int item_number)
+{
+	empty = false;
+	items.push_back(creatures[item_number]);
 }
 Inventory::Inventory()
 {
-	max_weight = 100;
-	weight = 0;
+	empty = true;
 }
 Inventory::~Inventory()
 {
