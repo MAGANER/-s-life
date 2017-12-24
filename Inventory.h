@@ -7,6 +7,7 @@ private:
 	vector<Object> items;
 	bool empty;
 public:
+	int get_health(int item_number);
 	void delete_item(int item_number);
 	int get_inventory_size();
 	void show_inventory();

@@ -52,9 +52,7 @@ void main()
 				system("cls");
 			}
 		}
-		else {
-			cout << "                                              " << "GAME OVER" << endl;
-		}
+		
 		turn++;
 	}
 
@@ -154,6 +152,16 @@ void enter_command(vector<Object>& creatures)
 	}
 	if (command == "use")
 	{
-		
+		int item_number;
+		cout << "enter number of item you want to use:";
+		cin >> item_number;
+		if (invt.get_inventory_size() < item_number)
+		{
+			cout << "you have no " << item_number << "th item!" << endl;
+		}
+		else {
+			hero.set_health(invt.get_health(item_number));
+		}
+		clear_screen = true;
 	}
 }

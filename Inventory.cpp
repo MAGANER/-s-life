@@ -1,5 +1,9 @@
 #include "Inventory.h"
 
+int Inventory::get_health(int item_number)
+{
+	return items[item_number].get_health();
+}
 void Inventory::delete_item(int item_number)
 {
 	items.erase(items.begin() + item_number);

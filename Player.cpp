@@ -1,4 +1,8 @@
 #include "Player.h"
+void Player::set_health(int health)
+{
+	this->health = this->health + health;
+}
 void Player::die()
 {
 	health = health - taken_items_weight;
