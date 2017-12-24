@@ -8,6 +8,8 @@ private:
 public:
 	int taken_items_weight;
 	int energy;
+	
+	void die();
 	int return_health();
 	int return_mana();
 	int return_armor();

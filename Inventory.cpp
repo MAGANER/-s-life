@@ -1,5 +1,13 @@
 #include "Inventory.h"
 
+void Inventory::delete_item(int item_number)
+{
+	items.erase(items.begin() + item_number);
+}
+int Inventory::get_inventory_size()
+{
+	return items.size();
+}
 void Inventory::show_inventory()
 {
 	if (is_empty() == false)

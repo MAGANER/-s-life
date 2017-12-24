@@ -40,8 +40,13 @@ void main()
 				draw_game_screen();
 				enter_command(creatures);
 			}
-			hero.energy = hero.energy - 1 - hero.taken_items_weight;
-			turn++;
+			if (hero.energy > 0)
+			{
+				hero.energy = hero.energy - 1 - hero.taken_items_weight;
+			}
+			else {
+				hero.die();
+			}
 			if (clear_screen)
 			{
 				system("cls");
@@ -50,6 +55,7 @@ void main()
 		else {
 			cout << "                                              " << "GAME OVER" << endl;
 		}
+		turn++;
 	}
 
 	_getch();
@@ -145,5 +151,9 @@ void enter_command(vector<Object>& creatures)
 	if (command == "continue")
 	{
 		clear_screen = true;
+	}
+	if (command == "use")
+	{
+		
 	}
 }

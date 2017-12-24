@@ -93,7 +93,6 @@ void Object::generate()
 		damage = 0;
 		energy = 1 + rand() & 50;
 		weight = 1;
-		type == "plant";
 		int plant_number = 1 + rand() % 3;
 		if (plant_number == 1)
 		{

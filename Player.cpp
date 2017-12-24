@@ -1,4 +1,8 @@
 #include "Player.h"
+void Player::die()
+{
+	health = health - taken_items_weight;
+}
 int Player::return_mana()
 {
 	return mana;
