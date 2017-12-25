@@ -152,17 +152,44 @@ void enter_command(vector<Object>& creatures)
 	}
 	if (command == "use")
 	{
+		string using_type;
 		int item_number;
 		cout << "enter number of item you want to use:";
 		cin >> item_number;
+		cout << "enter what do you want to do with that:";
+		cin >> using_type;
 		if (invt.get_inventory_size() < item_number)
 		{
 			cout << "you have no " << item_number << "th item!" << endl;
 		}
 		else {
-			hero.set_energy(invt.get_energy(item_number));
-			hero.set_health(invt.get_health(item_number));
-			invt.delete_item(item_number);
+			if (using_type == "eat")
+			{
+				hero.set_energy(invt.get_energy(item_number));
+				hero.set_health(invt.get_health(item_number));
+				if (invt.is_equiped(item_number))
+				{
+					hero.set_armor(-hero.return_armor());
+					hero.set_damage(-hero.return_damage() +1);
+				}
+				hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
+				invt.delete_item(item_number);
+			}
+			if (using_type == "equip")
+			{
+				string equipment_type;
+				cout << "you want to use that as weapon or as armor:";
+				cin >> equipment_type;
+				if (equipment_type == "weapon")
+				{
+					hero.set_damage(invt.get_damage(item_number));
+				}
+				if (equipment_type == "armor")
+				{
+					hero.set_armor(invt.get_armor(item_number));
+				}
+				invt.set_equipedness(item_number);
+			}
 		}
 		clear_screen = true;
 	}

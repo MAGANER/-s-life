@@ -7,6 +7,11 @@ private:
 	vector<Object> items;
 	bool empty;
 public:
+	void set_equipedness(int item_number);
+	bool is_equiped(int item_number);
+	int get_weight(int item_number);
+	int get_damage(int item_number);
+	int get_armor(int item_number);
 	int get_energy(int item_number);
 	int get_health(int item_number);
 	void delete_item(int item_number);

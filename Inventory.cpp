@@ -1,5 +1,25 @@
 #include "Inventory.h"
 
+void Inventory::set_equipedness(int item_number)
+{
+	items[item_number].equiped = true;
+}
+bool Inventory::is_equiped(int item_number)
+{
+	return items[item_number].equiped;
+}
+int Inventory::get_weight(int item_number)
+{
+	return items[item_number].get_weight();
+}
+int Inventory::get_damage(int item_number)
+{
+	return items[item_number].get_damage();
+}
+int Inventory::get_armor(int item_number)
+{
+	return items[item_number].get_armor();
+}
 int Inventory::get_energy(int item_number)
 {
 	return items[item_number].get_energy();

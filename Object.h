@@ -12,6 +12,7 @@ private:
 	int weight;
 public:
 	bool show;
+	bool equiped;
 	void fuck_away();
 	int get_weight();
 	int get_energy();

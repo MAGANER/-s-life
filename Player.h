@@ -8,6 +8,8 @@ private:
 	char hero = '@';
 	int current_x, current_y,old_x,old_y, health,mana,armor,damage;
 public:
+	void set_armor(int armor);
+	void set_damage(int damage);
 	void set_energy(int energy);
 	void set_health(int health);
 	int taken_items_weight;

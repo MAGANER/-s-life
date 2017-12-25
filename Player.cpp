@@ -1,5 +1,13 @@
 #include "Player.h"
 
+void Player::set_damage(int damage)
+{
+	this->damage = this->damage + damage;
+}
+void Player::set_armor(int armor)
+{
+	this->armor = this->armor + armor;
+}
 void Player::set_energy(int energy)
 {
 	this->energy = this->energy + energy;
