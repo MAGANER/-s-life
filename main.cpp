@@ -160,7 +160,9 @@ void enter_command(vector<Object>& creatures)
 			cout << "you have no " << item_number << "th item!" << endl;
 		}
 		else {
+			hero.set_energy(invt.get_energy(item_number));
 			hero.set_health(invt.get_health(item_number));
+			invt.delete_item(item_number);
 		}
 		clear_screen = true;
 	}

@@ -1,4 +1,9 @@
 #include "Player.h"
+
+void Player::set_energy(int energy)
+{
+	this->energy = this->energy + energy;
+}
 void Player::set_health(int health)
 {
 	this->health = this->health + health;
