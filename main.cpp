@@ -14,32 +14,42 @@ int turn = 0;
 bool GAME = true;
 bool clear_screen = true;
 
-void set_start_objects_poses(vector<Object>& creatures);
+void draw_objects(vector<Object>& creatures);
 void enter_command(vector<Object>& creatures);
 void draw_game_info();
 void draw_game_screen();
 void main()
 {
+	// 1.get number of creatures
+	// 2.create them
 	srand(time(0));
 	int creat_numb = 50 + rand() % 100;
 	vector<Object> creatures(creat_numb, Object());
-	for (int i = 0; i < creatures.size(); i++)
+	for (int counter = 0; counter < creatures.size(); counter++)
 	{
-		creatures[i].generate();
+		creatures[counter].generate();
 	}
 
+	// game cycle
 	while (GAME)
 	{
-		
+		// play if hero is alive
 		if (hero.return_health() > 0)
 		{
 			if (clear_screen)
 			{
-				set_start_objects_poses(creatures);
+				draw_objects(creatures);
 				draw_game_info();
 				draw_game_screen();
 				enter_command(creatures);
+				// more strength less decrease energy
+				if (hero.taken_items_weight != 0)
+				{
+					hero.taken_items_weight = hero.taken_items_weight - hero.get_strength();
+				}
+				system("cls");
 			}
+			// die if hero hasn't energy else decrease energy
 			if (hero.energy > 0)
 			{
 				hero.energy = hero.energy - 1 - hero.taken_items_weight;
@@ -47,10 +57,19 @@ void main()
 			else {
 				hero.die();
 			}
-			if (clear_screen)
+
+			// every 5 turn increase hero strength
+			int start_turn = 0; 
+			int now_turn = turn;
+			if (start_turn + 5 == turn)
 			{
-				system("cls");
+				start_turn = turn;
+				hero.increase_strength();
 			}
+		}
+		else {
+			cout << "                          GAME OVER!";
+			break;
 		}
 		
 		turn++;
@@ -58,22 +77,21 @@ void main()
 
 	_getch();
 }
-void set_start_objects_poses(vector<Object>& creatures)
+void draw_objects(vector<Object>& creatures)
 {
-	for (int i = 0; i < creatures.size(); i++)
+	for (int counter = 0; counter < creatures.size(); counter++)
 	{
-		if (creatures[i].show == true)
+		if (creatures[counter].show == true)
 		{
-			map[creatures[i].get_y_pos()][creatures[i].get_x_pos()] = creatures[i].get_view();
+			map[creatures[counter].get_y_pos()][creatures[counter].get_x_pos()] = creatures[counter].get_view();
 		}
 		else {
-			map[creatures[i].get_y_pos()][creatures[i].get_x_pos()] = ' ';
+			map[creatures[counter].get_y_pos()][creatures[counter].get_x_pos()] = ' ';
 		}
 	}
 }
 void draw_game_screen()
 {
-	int creature_count = 0;
 	for (int line = 0; line < 59; line++)
 	{
 		for (int colomn = 0; colomn < 175; colomn++)
@@ -82,7 +100,6 @@ void draw_game_screen()
 			map[hero.return_y()][hero.return_x()] = hero.return_hero();
 		}
 		cout << endl;
-		creature_count++;
 	}
 }
 void draw_game_info()
@@ -104,29 +121,29 @@ void enter_command(vector<Object>& creatures)
 	cin >> command;
 	if (command == "go_up")
 	{
-		hero.set_y(hero.return_y() - 1);
+		hero.set_y(hero.return_y() - hero.get_speed());
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
 		clear_screen = true;
 	}
-	if (command == "go_down")
+	else if (command == "go_down")
 	{
-		hero.set_y(hero.return_y() + 1);
+		hero.set_y(hero.return_y() + hero.get_speed());
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
 		clear_screen = true;
 	}
-	if (command == "go_right")
+	else if (command == "go_right")
 	{
-		hero.set_x(hero.return_x() + 1);
+		hero.set_x(hero.return_x() + hero.get_speed());
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
 		clear_screen = true;
 	}
-	if (command == "go_left")
+	else if (command == "go_left")
 	{
-		hero.set_x(hero.return_x() - 1);
+		hero.set_x(hero.return_x() - hero.get_speed());
 		map[hero.return_old_y()][hero.return_old_x()] = ' ';
 		clear_screen = true;
 	}
-	if (command == "take")
+	else if (command == "take")
 	{
 		// character can take item if this item beside its
 		for (int counter = 0; counter < creatures.size(); counter++)
@@ -140,17 +157,17 @@ void enter_command(vector<Object>& creatures)
 			}
 		}
 	}
-	if (command == "show_invt")
+	else if (command == "show_invt")
 	{
 		invt.show_inventory();
 		clear_screen = false;
 		enter_command(creatures);
 	}
-	if (command == "continue")
+	else if (command == "continue")
 	{
 		clear_screen = true;
 	}
-	if (command == "use")
+	else if (command == "use")
 	{
 		string using_type;
 		int item_number;
@@ -174,6 +191,9 @@ void enter_command(vector<Object>& creatures)
 				else {
 					hero.set_energy(invt.get_energy(item_number));
 					hero.set_health(invt.get_health(item_number));
+					// if we eat armor or weapon
+					// so armor and weapon must be deleted
+					// and their weight too
 					if (invt.is_equiped(item_number))
 					{
 						hero.set_armor(-hero.return_armor());
@@ -201,4 +221,10 @@ void enter_command(vector<Object>& creatures)
 		}
 		clear_screen = true;
 	}
+	else {
+		cout << "no " << command << " command!";
+		clear_screen = false;
+		enter_command(creatures);
+	}
+
 }

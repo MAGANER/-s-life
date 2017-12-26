@@ -7,7 +7,6 @@ private:
 	int x, y;
 	char view;
 	string type;
-	int shit;
 	int energy;
 	int weight;
 public:

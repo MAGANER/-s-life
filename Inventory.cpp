@@ -6,6 +6,7 @@ string Inventory::get_type(int item_number)
 }
 void Inventory::set_equipedness(int item_number)
 {
+	// it means this item is equiped
 	items[item_number].equiped = true;
 }
 bool Inventory::is_equiped(int item_number)
@@ -75,6 +76,7 @@ void Inventory::add_item(vector<Object>& creatures,int item_number)
 }
 Inventory::Inventory()
 {
+	// at game start invt is empty
 	empty = true;
 }
 Inventory::~Inventory()

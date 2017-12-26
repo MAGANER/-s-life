@@ -1,5 +1,29 @@
 #include "Player.h"
 
+void Player::increase_intellect()
+{
+	 intellect++;
+}
+void Player::increase_speed()
+{
+	speed++;
+}
+void Player::increase_strength()
+{
+	strength++;
+}
+int Player::get_strength()
+{
+	return strength;
+}
+int Player::get_speed()
+{
+	return speed;
+}
+int Player::get_intellect()
+{
+	return intellect;
+}
 void Player::set_damage(int damage)
 {
 	this->damage = this->damage + damage;
@@ -70,6 +94,9 @@ char Player::return_hero()
 }
 Player::Player()
 {
+	speed = 1;
+	intellect = 1;
+	strength = 1;
 	hero = '@';
 	current_x = 4 + rand() & 50;
 	current_y = 4 + rand() & 50;

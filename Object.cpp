@@ -2,6 +2,7 @@
 
 void Object::fuck_away()
 {
+	// if object is used/died etc
 	view = ' ';
 	cout << view << endl;
 }

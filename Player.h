@@ -7,7 +7,14 @@ class Player
 private:
 	char hero = '@';
 	int current_x, current_y,old_x,old_y, health,mana,armor,damage;
+	int strength, speed, intellect;
 public:
+	void increase_speed();
+	void increase_intellect();
+	void increase_strength();
+	int get_speed();
+	int get_intellect();
+	int get_strength();
 	void set_armor(int armor);
 	void set_damage(int damage);
 	void set_energy(int energy);
