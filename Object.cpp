@@ -47,7 +47,7 @@ void Object::generate()
 	x = 1 + rand() % 170;
 	y = 1 + rand() & 50;
 
-	int just_number = 1 + rand() % 2;
+	int just_number = 1 + rand() % 3;
 	if (just_number == 1)
 	{
 		type = "food";
@@ -133,6 +133,35 @@ void Object::generate()
 				armor = 0;
 				damage = 1 + rand() % 10;
 			}
+		}
+	}
+	if (just_number == 3)
+	{
+		health = 10;
+		armor = 5;
+		energy = 0;
+		weight = 1 + rand() % 50;
+		damage = weight;
+		int stone_number = 1 + rand() % 2;
+		if (stone_number == 1)
+		{
+			health = 10;
+			armor = 5;
+			energy = 0;
+			weight = 1 + rand() % 50;
+			damage = weight;
+			type = "stone";
+			view = '*';
+		}
+		if (stone_number == 2)
+		{
+			health = 0;
+			armor = 10;
+			energy = 0;
+			weight = 1 + rand() % 30;
+			damage = weight+5;
+			type = "iron";
+			view = '*';
 		}
 	}
 }

@@ -165,15 +165,23 @@ void enter_command(vector<Object>& creatures)
 		else {
 			if (using_type == "eat")
 			{
-				hero.set_energy(invt.get_energy(item_number));
-				hero.set_health(invt.get_health(item_number));
-				if (invt.is_equiped(item_number))
+				if (invt.get_type(item_number) == " stone" || invt.get_type(item_number) == "iron")
 				{
-					hero.set_armor(-hero.return_armor());
-					hero.set_damage(-hero.return_damage() +1);
+					cout << "you can eat " << invt.get_type(item_number) << "!";
+					enter_command(creatures);
+					clear_screen = false;
 				}
-				hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
-				invt.delete_item(item_number);
+				else {
+					hero.set_energy(invt.get_energy(item_number));
+					hero.set_health(invt.get_health(item_number));
+					if (invt.is_equiped(item_number))
+					{
+						hero.set_armor(-hero.return_armor());
+						hero.set_damage(-hero.return_damage() + 1);
+					}
+					hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
+					invt.delete_item(item_number);
+				}
 			}
 			if (using_type == "equip")
 			{

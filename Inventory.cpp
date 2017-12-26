@@ -1,5 +1,9 @@
 #include "Inventory.h"
 
+string Inventory::get_type(int item_number)
+{
+	return items[item_number].get_type();
+}
 void Inventory::set_equipedness(int item_number)
 {
 	items[item_number].equiped = true;
