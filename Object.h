@@ -24,6 +24,7 @@ public:
 	string get_type();
 	void generate();
 	Object();
+	Object(int energy, int weight, int damage,int health,int armor,string type);
 	~Object();
 };
 

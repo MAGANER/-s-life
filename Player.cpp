@@ -1,5 +1,9 @@
 #include "Player.h"
 
+void Player::increase_energy()
+{
+	energy++;
+}
 void Player::increase_intellect()
 {
 	 intellect++;

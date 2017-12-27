@@ -23,7 +23,7 @@ void main()
 	// 1.get number of creatures
 	// 2.create them
 	srand(time(0));
-	int creat_numb = 200 + rand() % 400;
+	int creat_numb = 500 + rand() % 1000;
 	vector<Object> creatures(creat_numb, Object());
 	for (int counter = 0; counter < creatures.size(); counter++)
 	{
@@ -48,19 +48,20 @@ void main()
 			// die if hero hasn't energy else decrease energy
 			if (hero.energy > 0)
 			{
-				hero.energy = hero.energy + hero.get_strength() - 1 - hero.taken_items_weight;
+				hero.energy = hero.energy - 1 - hero.taken_items_weight;
 			}
 			else {
 				hero.die();
 			}
 
-			// every 5 turn increase hero strength
+			// every 5 turn increase hero strength, energy
 			int start_turn = 0; 
 			int now_turn = turn;
 			if (start_turn + 5 == turn)
 			{
 				start_turn = turn;
 				hero.increase_strength();
+				hero.increase_energy();
 			}
 		}
 		else {
