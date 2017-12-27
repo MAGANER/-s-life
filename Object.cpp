@@ -55,7 +55,7 @@ void Object::generate()
 		weight = 1;
 		damage = 1; // yeap, we can use food as weapon and armor
 		armor = 1;
-		int food_number = 1 + rand() % 3;
+		int food_number = 1 + rand() % 4;
 		if (food_number == 1)
 		{
 			type = "food";
@@ -85,6 +85,15 @@ void Object::generate()
 			damage = 6; // :Do u understand 
 			health = -food_health;
 			view = 'f';
+		}
+		if (food_number == 4)
+		{
+			type = "mushroom";
+			energy = 20 + rand() % 50;
+			// it's normal food
+			int food_health = 1 + rand() & 50;
+			health = food_health;
+			view = 'T';
 		}
 	}
 	if (just_number == 2)

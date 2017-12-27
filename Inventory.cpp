@@ -1,5 +1,13 @@
 #include "Inventory.h"
 
+int Inventory::get_invt_weight()
+{
+	for (int counter = 0; counter < items.size(); counter++)
+	{
+		weight = items[counter].get_weight() + weight;
+	}
+	return weight;
+}
 string Inventory::get_type(int item_number)
 {
 	return items[item_number].get_type();

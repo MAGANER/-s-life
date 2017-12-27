@@ -6,7 +6,9 @@ class Inventory
 private:
 	vector<Object> items;
 	bool empty;
+	int weight;
 public:
+	int get_invt_weight();
 	string get_type(int item_number);
 	void set_equipedness(int item_number);
 	bool is_equiped(int item_number);

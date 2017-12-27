@@ -23,7 +23,7 @@ void main()
 	// 1.get number of creatures
 	// 2.create them
 	srand(time(0));
-	int creat_numb = 50 + rand() % 100;
+	int creat_numb = 200 + rand() % 400;
 	vector<Object> creatures(creat_numb, Object());
 	for (int counter = 0; counter < creatures.size(); counter++)
 	{
@@ -43,16 +43,12 @@ void main()
 				draw_game_screen();
 				enter_command(creatures);
 				// more strength less decrease energy
-				if (hero.taken_items_weight != 0)
-				{
-					hero.taken_items_weight = hero.taken_items_weight - hero.get_strength();
-				}
 				system("cls");
 			}
 			// die if hero hasn't energy else decrease energy
 			if (hero.energy > 0)
 			{
-				hero.energy = hero.energy - 1 - hero.taken_items_weight;
+				hero.energy = hero.energy + hero.get_strength() - 1 - hero.taken_items_weight;
 			}
 			else {
 				hero.die();
@@ -117,7 +113,7 @@ void enter_command(vector<Object>& creatures)
 {
 	cout << endl;
 	cout << "COMMANDS:" << endl;
-	string command;
+	string command, old_command;
 	cin >> command;
 	if (command == "go_up")
 	{
@@ -150,7 +146,7 @@ void enter_command(vector<Object>& creatures)
 		{
 			if (hero.return_x() + 1 == creatures[counter].get_x_pos() && hero.return_y() == creatures[counter].get_y_pos())
 			{
-				hero.taken_items_weight = creatures[counter].get_weight();
+				hero.taken_items_weight = hero.taken_items_weight + creatures[counter].get_weight();
 				invt.add_item(creatures, counter);
 				creatures[counter].fuck_away();
 				clear_screen = true;
