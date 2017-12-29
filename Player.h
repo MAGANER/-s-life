@@ -4,8 +4,8 @@
 #include<vector>
 class Player
 {
-private:
-	char hero = '@';
+protected:
+	char hero;
 	int current_x, current_y,old_x,old_y, health,mana,armor,damage;
 	int strength, speed, intellect;
 public:

@@ -55,7 +55,7 @@ void Object::generate()
 		weight = 1;
 		damage = 1; // yeap, we can use food as weapon and armor
 		armor = 1;
-		int food_number = 1 + rand() % 8;
+		int food_number = 1 + rand() % 9;
 		if (food_number == 1)
 		{
 			type = "food";
@@ -129,6 +129,16 @@ void Object::generate()
 			health = 1;
 			armor = 1;
 			energy = 10 + rand() & 30;
+			view = 'v';
+		}
+		if (food_number == 9)
+		{
+			// TODO:add speed increaser
+			type = "speed_potion";
+			weight = -2;
+			health = 1;
+			armor = 1;
+			energy = 1 + rand() & 2;
 			view = 'v';
 		}
 	}

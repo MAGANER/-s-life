@@ -6,6 +6,8 @@
 #include<vector>
 #include"Object.h"
 #include"Inventory.h"
+#include"Enemy.h"
+#include<Windows.h>
 
 Inventory invt;
 Player hero;
@@ -14,12 +16,18 @@ int turn = 0;
 bool GAME = true;
 bool clear_screen = true;
 
+
+void draw_hero();
+void draw_monsters(vector<Enemy>& enemies);
 void draw_objects(vector<Object>& creatures);
 void enter_command(vector<Object>& creatures);
 void draw_game_info();
 void draw_game_screen();
 void main()
 {
+	SetConsoleTitle("Roguelike");
+
+	///   ITEM CREATING          ///
 	// 1.get number of creatures
 	// 2.create them
 	srand(time(0));
@@ -28,6 +36,14 @@ void main()
 	for (int counter = 0; counter < creatures.size(); counter++)
 	{
 		creatures[counter].generate();
+	}
+	///   MONSTER CREATING     ///
+	srand(time(0));
+	int monster_numb = 100 + rand() % 300;
+	vector<Enemy> enemies(monster_numb, Enemy());
+	for (int counter = 0; counter < enemies.size(); counter++)
+	{
+		enemies[counter].generate();
 	}
 
 	// game cycle
@@ -38,6 +54,8 @@ void main()
 		{
 			if (clear_screen)
 			{
+				draw_hero();
+				draw_monsters(enemies);
 				draw_objects(creatures);
 				draw_game_info();
 				draw_game_screen();
@@ -74,6 +92,17 @@ void main()
 
 	_getch();
 }
+void draw_hero()
+{
+	map[hero.return_y()][hero.return_x()] = hero.return_hero();
+}
+void draw_monsters(vector<Enemy>& enemies) 
+{
+	for (int counter = 0; counter < enemies.size(); counter++)
+	{
+		map[enemies[counter].return_y()][enemies[counter].return_x()] = enemies[counter].return_hero();
+	}
+}
 void draw_objects(vector<Object>& creatures)
 {
 	for (int counter = 0; counter < creatures.size(); counter++)
@@ -94,7 +123,6 @@ void draw_game_screen()
 		for (int colomn = 0; colomn < 175; colomn++)
 		{
 			cout << map[line][colomn];
-			map[hero.return_y()][hero.return_x()] = hero.return_hero();
 		}
 		cout << endl;
 	}
