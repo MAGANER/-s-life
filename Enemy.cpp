@@ -6,33 +6,49 @@ void Enemy::go()
 	if (direction == 1)
 	{
 		//go up
-		if (!(return_y() - get_speed() <0))
+		bool can_go = (return_y() - get_speed()) <0;
+		if (!can_go)
 		{
 			set_y(return_y() - get_speed());
+		}
+		else {
+			set_y(return_y());
 		}
 	}
 	if (direction == 2)
 	{
 		//go down
-		if (!(return_y() + get_speed() >50))
+		bool can_go = (return_y() + get_speed()) > 50;
+		if (!can_go)
 		{
 			set_y(return_y() + get_speed());
+		}
+		else {
+			set_y(return_y());
 		}
 	}
 	if (direction == 3)
 	{
 		// go right
-		if (!(return_x() + get_speed() > 175))
+		bool can_go = (return_x() + get_speed()) > 170;
+		if (!can_go)
 		{
 			set_x(return_x() + get_speed());
+		}
+		else {
+			set_x(return_x());
 		}
 	}
 	if (direction == 4)
 	{
 		//go left
-		if (!(return_x() - get_speed() < 0))
+		bool can_go = (return_x() + get_speed()) < 0;
+		if (!can_go)
 		{
 			set_x(return_x() - get_speed());
+		}
+		else {
+			set_x(return_x());
 		}
 	}
 }
