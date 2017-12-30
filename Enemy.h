@@ -7,6 +7,7 @@ private:
 	string type;
 	string mob_class;
 public:
+	void go();
 	void generate();
 	void fuck_away();
 	Enemy();

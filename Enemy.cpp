@@ -1,5 +1,42 @@
 #include "Enemy.h"
 
+void Enemy::go()
+{
+	int direction = 1 + rand() % 4;
+	if (direction == 1)
+	{
+		//go up
+		if (!(return_y() - get_speed() <0))
+		{
+			set_y(return_y() - get_speed());
+		}
+	}
+	if (direction == 2)
+	{
+		//go down
+		if (!(return_y() + get_speed() >50))
+		{
+			set_y(return_y() + get_speed());
+		}
+	}
+	if (direction == 3)
+	{
+		// go right
+		if (!(return_x() + get_speed() > 175))
+		{
+			set_x(return_x() + get_speed());
+		}
+	}
+	if (direction == 4)
+	{
+		//go left
+		if (!(return_x() - get_speed() < 0))
+		{
+			set_x(return_x() - get_speed());
+		}
+	}
+}
+
 void Enemy::fuck_away()
 {
 	hero = ' ';

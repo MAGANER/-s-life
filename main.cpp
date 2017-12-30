@@ -16,7 +16,7 @@ int turn = 0;
 bool GAME = true;
 bool clear_screen = true;
 
-
+void monsters_move(vector<Enemy>& enemies);
 void draw_hero();
 void draw_monsters(vector<Enemy>& enemies);
 void draw_objects(vector<Object>& creatures);
@@ -60,7 +60,7 @@ void main()
 				draw_game_info();
 				draw_game_screen();
 				enter_command(creatures);
-				// more strength less decrease energy
+				monsters_move(enemies);
 				system("cls");
 			}
 			// die if hero hasn't energy else decrease energy
@@ -260,4 +260,13 @@ void enter_command(vector<Object>& creatures)
 		enter_command(creatures);
 	}
 
+}
+void monsters_move(vector<Enemy>& enemies)
+{
+	for (int counter = 0; counter < enemies.size(); counter++)
+	{
+		enemies[counter].go();
+		map[enemies[counter].return_old_y()][enemies[counter].return_old_x()] = ' ';
+		
+	}
 }
