@@ -133,7 +133,6 @@ void Object::generate()
 		}
 		if (food_number == 9)
 		{
-			// TODO:add speed increaser
 			type = "speed_potion";
 			weight = -2;
 			health = 1;

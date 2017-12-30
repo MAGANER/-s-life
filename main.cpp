@@ -227,6 +227,14 @@ void enter_command(vector<Object>& creatures)
 					hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
 					invt.delete_item(item_number);
 				}
+				if (invt.get_type(item_number) == "speed_potion")
+				{
+					hero.set_energy(invt.get_energy(item_number));
+					hero.set_health(invt.get_health(item_number));
+					hero.increase_energy();
+					hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
+					invt.delete_item(item_number);
+				}
 			}
 			if (using_type == "equip")
 			{
