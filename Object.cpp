@@ -1,5 +1,10 @@
 #include "Object.h"
 
+void Object::become_used()
+{
+	energy = 0;
+	health = 0;
+}
 void Object::fuck_away()
 {
 	// if object is used/died etc

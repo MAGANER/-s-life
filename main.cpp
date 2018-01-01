@@ -213,14 +213,14 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 		{
 			cout << "you have no " << item_number << "th item!" << endl;
 		}
-		else {
+		else 
+		{
 			if (using_type == "eat")
 			{
 				if (invt.get_type(item_number) == " stone" || invt.get_type(item_number) == "iron")
 				{
-					cout << "you can eat " << invt.get_type(item_number) << "!";
+					cout << "you can not eat " << invt.get_type(item_number) << "!";
 					enter_command(creatures,enemies);
-					clear_screen = false;
 				}
 				else {
 					hero.set_energy(invt.get_energy(item_number));

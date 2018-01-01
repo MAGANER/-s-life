@@ -10,7 +10,10 @@ int Inventory::get_invt_weight()
 }
 string Inventory::get_type(int item_number)
 {
-	return items[item_number].get_type();
+	if (!(get_inventory_size() < item_number))
+	{
+		return items[item_number].get_type();
+	}
 }
 void Inventory::set_equipedness(int item_number)
 {
@@ -43,13 +46,7 @@ int Inventory::get_health(int item_number)
 }
 void Inventory::delete_item(int item_number)
 {
-	if (item_number == 0)
-	{
-		items.erase(items.begin());
-	}
-	else {
-		items.erase(items.begin() + item_number);
-	}
+	items[item_number].become_used();
 }
 int Inventory::get_inventory_size()
 {

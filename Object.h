@@ -10,6 +10,7 @@ private:
 	int energy;
 	int weight;
 public:
+	void become_used();
 	bool show;
 	bool equiped;
 	void fuck_away();
