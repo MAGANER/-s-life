@@ -102,8 +102,8 @@ Player::Player()
 	intellect = 1;
 	strength = 1;
 	hero = '@';
-	current_x = 4 + rand() & 50;
-	current_y = 4 + rand() & 50;
+	current_x = 4;
+	current_y = 4;
 	health = 100;
 	damage = 1;
 	armor = 10;

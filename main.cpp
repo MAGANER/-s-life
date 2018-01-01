@@ -12,6 +12,7 @@
 Inventory invt;
 Player hero;
 
+int deads = 0;
 int turn = 0;
 bool GAME = true;
 bool clear_screen = true;
@@ -20,7 +21,7 @@ void monsters_move(vector<Enemy>& enemies);
 void draw_hero();
 void draw_monsters(vector<Enemy>& enemies);
 void draw_objects(vector<Object>& creatures);
-void enter_command(vector<Object>& creatures);
+void enter_command(vector<Object>& creatures, vector<Enemy>& enemies);
 void draw_game_info();
 void draw_game_screen();
 void main()
@@ -59,7 +60,14 @@ void main()
 				draw_objects(creatures);
 				draw_game_info();
 				draw_game_screen();
-				enter_command(creatures);
+				enter_command(creatures, enemies);
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					if (enemies[counter].get_health() <= 0)
+					{
+						enemies[counter].fuck_away();
+					}
+				}
 				monsters_move(enemies);
 				system("cls");
 			}
@@ -137,8 +145,9 @@ void draw_game_info()
 	cout << "ENERGY:" << hero.energy << endl;
 	cout << "TAKEN ITEMS' WEIGHT:" << hero.taken_items_weight << endl;
 	cout << "TURN:" << turn << endl;
+	cout << "DEADS:" << deads << endl;
 }
-void enter_command(vector<Object>& creatures)
+void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 {
 	cout << endl;
 	cout << "COMMANDS:" << endl;
@@ -186,7 +195,7 @@ void enter_command(vector<Object>& creatures)
 	{
 		invt.show_inventory();
 		clear_screen = false;
-		enter_command(creatures);
+		enter_command(creatures,enemies);
 	}
 	else if (command == "continue")
 	{
@@ -210,7 +219,7 @@ void enter_command(vector<Object>& creatures)
 				if (invt.get_type(item_number) == " stone" || invt.get_type(item_number) == "iron")
 				{
 					cout << "you can eat " << invt.get_type(item_number) << "!";
-					enter_command(creatures);
+					enter_command(creatures,enemies);
 					clear_screen = false;
 				}
 				else {
@@ -254,10 +263,243 @@ void enter_command(vector<Object>& creatures)
 		}
 		clear_screen = true;
 	}
+	else if (command == "throw")
+	{
+		int item_number;
+		cout << "enter item number you want to throw:";
+		cin >> item_number;
+		if (invt.get_inventory_size() < item_number)
+		{
+			cout << "you have no " << item_number << "!";
+			enter_command(creatures, enemies);
+		}
+		else {
+			string direct;
+			cout << "enter direction:";
+			cin >> direct;
+			if(direct == "up")
+			{
+				vector<int> x_poses;
+				vector<int> y_poses;
+				int enemy_count = 0;
+				for (int counter = 0; counter < enemies.size();counter++)
+				{
+					if (hero.return_x() == enemies[counter].return_x() && hero.return_y() > enemies[counter].return_y() && enemies[counter].get_health() > 0)
+					{
+						enemy_count++;
+						x_poses.push_back(enemies[counter].return_x());
+						y_poses.push_back(enemies[counter].return_y());
+					}
+				}
+				if (enemy_count > 0)
+				{
+					cout << " at this direction you have " << enemy_count << endl;
+					int enemy_number;
+					cout << "enter enemy number you want to attack:";
+					cin >> enemy_number;
+					if (enemy_number > enemy_count)
+					{
+						cout << "there is not so much enemies!" << endl;
+						enter_command(creatures, enemies);
+					}
+					else 
+					{
+						int target_number;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							int x = x_poses[enemy_number];
+							int y = y_poses[enemy_number];
+							if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+							{
+								target_number = counter;
+								break;
+							}
+						}
+						int target_x = enemies[target_number].return_x();
+						int target_y = enemies[target_number].return_y();
+						int damage = invt.get_damage(item_number);
+						enemies[target_number].set_health(damage);
+						invt.delete_item(item_number);
+						if (enemies[target_number].get_health() <= 0)
+						{
+							deads++;
+						}
+					}
+				}
+				else {
+					cout << " at this direction no enemies!" << endl;
+					enter_command(creatures, enemies);
+				}
+			}
+			else if(direct=="down")
+			{ 
+				vector<int> x_poses;
+				vector<int> y_poses;
+				int enemy_count = 0;
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					if (hero.return_x() == enemies[counter].return_x() && hero.return_y() < enemies[counter].return_y() && enemies[counter].get_health() > 0)
+					{
+						enemy_count++;
+						x_poses.push_back(enemies[counter].return_x());
+						y_poses.push_back(enemies[counter].return_y());
+					}
+				}
+				if (enemy_count > 0)
+				{
+					cout << " at this direction you have " << enemy_count << endl;
+					int enemy_number;
+					cout << "enter enemy number you want to attack:";
+					cin >> enemy_number;
+					if (enemy_number > enemy_count)
+					{
+						cout << "there is not so much enemies!" << endl;
+						enter_command(creatures, enemies);
+					}
+					else
+					{
+						int target_number;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							int x = x_poses[enemy_number];
+							int y = y_poses[enemy_number];
+							if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+							{
+								target_number = counter;
+								break;
+							}
+						}
+						int target_x = enemies[target_number].return_x();
+						int target_y = enemies[target_number].return_y();
+						int damage = invt.get_damage(item_number);
+						enemies[target_number].set_health(-damage);
+						invt.delete_item(item_number);
+						if (enemies[target_number].get_health() <= 0)
+						{
+							deads++;
+						}
+					}
+				}
+				else {
+					cout << " at this direction no enemies!" << endl;
+					enter_command(creatures, enemies);
+				}
+					
+			}
+			else if(direct=="right")
+			{
+				vector<int> x_poses;
+				vector<int> y_poses;
+				int enemy_count = 0;
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					if (hero.return_x() < enemies[counter].return_x() && hero.return_y() == enemies[counter].return_y() && enemies[counter].get_health() > 0)
+					{
+						enemy_count++;
+						x_poses.push_back(enemies[counter].return_x());
+						y_poses.push_back(enemies[counter].return_y());
+					}
+				}
+				if (enemy_count > 0)
+				{
+					cout << " at this direction you have " << enemy_count << endl;
+					int enemy_number;
+					cout << "enter enemy number you want to attack:";
+					cin >> enemy_number;
+					if (enemy_number > enemy_count)
+					{
+						cout << "there is not so much enemies!" << endl;
+						enter_command(creatures, enemies);
+					}
+					else
+					{
+						int target_number;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							int x = x_poses[enemy_number];
+							int y = y_poses[enemy_number];
+							if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+							{
+								target_number = counter;
+								break;
+							}
+						}
+						int target_x = enemies[target_number].return_x();
+						int target_y = enemies[target_number].return_y();
+						int damage = invt.get_damage(item_number);
+						enemies[target_number].set_health(-damage);
+						invt.delete_item(item_number);
+						if (enemies[target_number].get_health() <= 0)
+						{
+							deads++;
+						}
+					}
+				}
+				else {
+					cout << " at this direction no enemies!" << endl;
+					enter_command(creatures, enemies);
+				}
+			}
+			else if(direct =="left")
+			{
+				vector<int> x_poses;
+				vector<int> y_poses;
+				int enemy_count = 0;
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					if (hero.return_x() > enemies[counter].return_x() && hero.return_y() == enemies[counter].return_y() && enemies[counter].get_health() > 0)
+					{
+						enemy_count++;
+						x_poses.push_back(enemies[counter].return_x());
+						y_poses.push_back(enemies[counter].return_y());
+					}
+				}
+				if (enemy_count > 0)
+				{
+					cout << " at this direction you have " << enemy_count << endl;
+					int enemy_number;
+					cout << "enter enemy number you want to attack:";
+					cin >> enemy_number;
+					if (enemy_number > enemy_count)
+					{
+						cout << "there is not so much enemies!" << endl;
+						enter_command(creatures, enemies);
+					}
+					else
+					{
+						int target_number;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							int x = x_poses[enemy_number];
+							int y = y_poses[enemy_number];
+							if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+							{
+								target_number = counter;
+								break;
+							}
+						}
+						int target_x = enemies[target_number].return_x();
+						int target_y = enemies[target_number].return_y();
+						int damage = invt.get_damage(item_number);
+						enemies[target_number].set_health(-damage);
+						invt.delete_item(item_number);
+						if (enemies[target_number].get_health() <= 0)
+						{
+							deads++;
+						}
+					}
+				}
+				else {
+					cout << " at this direction no enemies!" << endl;
+					enter_command(creatures, enemies);
+				}
+			}
+		}
+	}
 	else {
 		cout << "no " << command << " command!";
 		clear_screen = false;
-		enter_command(creatures);
+		enter_command(creatures,enemies);
 	}
 
 }
@@ -265,8 +507,10 @@ void monsters_move(vector<Enemy>& enemies)
 {
 	for (int counter = 0; counter < enemies.size(); counter++)
 	{
-		enemies[counter].go();
-		map[enemies[counter].return_old_y()][enemies[counter].return_old_x()] = ' ';
-		
+		if (enemies[counter].get_health() > 0)
+		{
+			enemies[counter].go();
+			map[enemies[counter].return_old_y()][enemies[counter].return_old_x()] = ' ';
+		}
 	}
 }

@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+int Enemy::get_health()
+{
+	return health;
+}
 void Enemy::go()
 {
 	int direction = 1 + rand() % 4;
