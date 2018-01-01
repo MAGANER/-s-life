@@ -16,6 +16,10 @@ void Player::increase_strength()
 {
 	strength++;
 }
+int Player::get_energy()
+{
+	return energy;
+}
 int Player::get_strength()
 {
 	return strength;

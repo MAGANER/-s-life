@@ -61,11 +61,22 @@ void main()
 				draw_game_info();
 				draw_game_screen();
 				enter_command(creatures, enemies);
+                // check monsters' energy
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					if (enemies[counter].get_energy == 0)
+					{
+						enemies[counter].fuck_away();
+						deads++;
+					}
+				}
+				// check monsters' lifes
 				for (int counter = 0; counter < enemies.size(); counter++)
 				{
 					if (enemies[counter].get_health() <= 0)
 					{
 						enemies[counter].fuck_away();
+						deads++;
 					}
 				}
 				monsters_move(enemies);

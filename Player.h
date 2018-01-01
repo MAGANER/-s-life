@@ -13,6 +13,7 @@ public:
 	void increase_speed();
 	void increase_intellect();
 	void increase_strength();
+	int get_energy();
 	int get_speed();
 	int get_intellect();
 	int get_strength();

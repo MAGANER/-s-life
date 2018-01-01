@@ -6,6 +6,7 @@ class Enemy :
 private:
 	string type;
 	string mob_class;
+	bool see_target;
 public:
 	int get_health();
 	void go();

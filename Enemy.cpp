@@ -55,6 +55,7 @@ void Enemy::go()
 			set_x(return_x());
 		}
 	}
+	--energy;
 }
 
 void Enemy::fuck_away()
@@ -126,6 +127,7 @@ void Enemy::generate()
 }
 Enemy::Enemy()
 {
+	see_target = false;
 	hero = '&';
 	energy = 200;
 }
