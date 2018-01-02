@@ -160,6 +160,9 @@ void draw_game_info()
 	cout << "ARMOR:" << hero.return_armor() << endl;
 	cout << "MANA:" << hero.return_mana() << endl;
 	cout << "ENERGY:" << hero.energy << endl;
+	cout << "STRENGTH:" << hero.get_strength() << endl;
+	cout << "INTELLECT:" << hero.get_intellect() << endl;
+	cout << "SPEED:" << hero.get_speed() << endl;
 	cout << "TAKEN ITEMS' WEIGHT:" << hero.taken_items_weight << endl;
 	cout << "TURN:" << turn << endl;
 	cout << "DEADS:" << deads << endl;
@@ -334,7 +337,8 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						}
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
-						int damage = invt.get_damage(item_number);
+						unsigned int range = target_y - hero.return_y();
+						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
 						enemies[target_number].set_health(damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -388,7 +392,8 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						}
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
-						int damage = invt.get_damage(item_number);
+						unsigned int range = target_y - hero.return_y();
+						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -443,7 +448,8 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						}
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
-						int damage = invt.get_damage(item_number);
+						unsigned int range = target_x - hero.return_x();
+						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range % 2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -497,7 +503,8 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						}
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
-						int damage = invt.get_damage(item_number);
+						unsigned int range = target_x - hero.return_x();
+						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
