@@ -64,7 +64,7 @@ void main()
                 // check monsters' energy
 				for (int counter = 0; counter < enemies.size(); counter++)
 				{
-					if (enemies[counter].get_energy == 0)
+					if (enemies[counter].get_energy() == 0)
 					{
 						enemies[counter].fuck_away();
 						deads++;

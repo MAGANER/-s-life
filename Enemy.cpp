@@ -57,7 +57,6 @@ void Enemy::go()
 	}
 	--energy;
 }
-
 void Enemy::fuck_away()
 {
 	hero = ' ';

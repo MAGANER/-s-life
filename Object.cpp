@@ -4,6 +4,9 @@ void Object::become_used()
 {
 	energy = 0;
 	health = 0;
+	armor = 0;
+	damage = 0;
+	weight = 0;
 }
 void Object::fuck_away()
 {
