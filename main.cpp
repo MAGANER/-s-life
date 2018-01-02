@@ -83,7 +83,15 @@ void main()
 				for (int counter = 0; counter < enemies.size(); counter++)
 				{
 					enemies[counter].detect_target(hero.return_x(), hero.return_y());
-
+				}
+				// to see hero
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					//TODO:cheking of border
+					if (enemies[counter].return_x() == hero.return_x() && enemies[counter].return_y() == hero.return_y())
+					{
+						enemies[counter].set_x(enemies[counter].return_x() - 2);
+					}
 				}
 				monsters_move(enemies);
 				system("cls");
@@ -97,13 +105,14 @@ void main()
 				hero.die();
 			}
 
-			// every 5 turn increase hero strength, energy
+			// every 5 turn increase hero strength, energy, intellect
 			int start_turn = 0; 
 			int now_turn = turn;
 			if (start_turn + 5 == turn)
 			{
 				start_turn = turn;
 				hero.increase_strength();
+				hero.increase_intellect();
 				hero.increase_energy();
 			}
 		}
@@ -338,7 +347,7 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
 						unsigned int range = target_y - hero.return_y();
-						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
+						int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range %2);
 						enemies[target_number].set_health(damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -393,7 +402,7 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
 						unsigned int range = target_y - hero.return_y();
-						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
+						int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range %2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -449,7 +458,7 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
 						unsigned int range = target_x - hero.return_x();
-						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range % 2);
+						int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -504,7 +513,7 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						int target_x = enemies[target_number].return_x();
 						int target_y = enemies[target_number].return_y();
 						unsigned int range = target_x - hero.return_x();
-						int damage = (invt.get_damage(item_number) + hero.get_strength()) - (range %2);
+						int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range %2);
 						enemies[target_number].set_health(-damage);
 						invt.delete_item(item_number);
 						if (enemies[target_number].get_health() <= 0)
@@ -519,6 +528,10 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 				}
 			}
 		}
+	}
+	else if (command == "power")
+	{
+		hero.set_damage(666);
 	}
 	else {
 		cout << "no " << command << " command!";

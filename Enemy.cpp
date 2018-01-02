@@ -74,7 +74,7 @@ void Enemy::go()
 			set_x(return_x() + get_speed());
 		}
 		else {
-			set_x(return_x());
+			set_x(return_x()-1);
 		}
 	}
 	if (direction == 4)
@@ -86,7 +86,7 @@ void Enemy::go()
 			set_x(return_x() - get_speed());
 		}
 		else {
-			set_x(return_x());
+			set_x(return_x()+1);
 		}
 	}
 	--energy;
@@ -94,7 +94,6 @@ void Enemy::go()
 void Enemy::fuck_away()
 {
 	hero = ' ';
-	cout << hero;
 }
 void Enemy::generate()
 {
