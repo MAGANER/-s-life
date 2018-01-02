@@ -79,6 +79,12 @@ void main()
 						deads++;
 					}
 				}
+				// monsters detect hero
+				for (int counter = 0; counter < enemies.size(); counter++)
+				{
+					enemies[counter].detect_target(hero.return_x(), hero.return_y());
+
+				}
 				monsters_move(enemies);
 				system("cls");
 			}

@@ -1,12 +1,46 @@
 #include "Enemy.h"
 
+void Enemy::detect_target(int target_x,int target_y)
+{
+	if (target_y == return_y() && target_x > return_x())
+	{
+		//target is righter
+		direction_is_choosed = true;
+		direction = 3;
+	}
+	else if (target_y == return_y() && target_x < return_x())
+	{
+		// target is lefter
+		direction_is_choosed = true;
+		direction = 4;
+	}
+	else if (target_x == return_x() && target_y > return_y())
+	{
+		//target is under
+		direction_is_choosed = true;
+		direction = 2;
+	}
+	else if (target_x == return_x() && target_y < return_y())
+	{
+		//target is above
+		direction_is_choosed = true;
+		direction = 1;
+	}
+	else
+	{
+		direction_is_choosed = false;
+	}
+}
 int Enemy::get_health()
 {
 	return health;
 }
 void Enemy::go()
 {
-	int direction = 1 + rand() % 4;
+	if (direction_is_choosed == false)
+	{
+		direction = 1 + rand() % 4;
+	}
 	if (direction == 1)
 	{
 		//go up
@@ -67,6 +101,7 @@ void Enemy::generate()
 	int type_number = 1 + rand() % 2;
 	if (type_number == 1)
 	{
+		vision_range = 5;
 		current_x = 2 + rand() % 170;
 		current_y = 2 + rand() % 50;
 		type = "Goblin";
@@ -97,6 +132,7 @@ void Enemy::generate()
 	}
 	if (type_number == 2)
 	{
+		vision_range = 7;
 		type = "Ork";
 		current_x = 2 + rand() % 170;
 		current_y = 2 + rand() % 50;
@@ -126,6 +162,7 @@ void Enemy::generate()
 }
 Enemy::Enemy()
 {
+	direction_is_choosed = false;
 	see_target = false;
 	hero = '&';
 	energy = 200;
