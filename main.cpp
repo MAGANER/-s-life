@@ -97,11 +97,15 @@ void main()
 						else {
 							range = enemies[counter].return_y() - hero.return_y();
 						}
+						if (mob_type == "ranger")
+						{
+							damage = (strength + enemies[counter].return_damage()) - (range%2);
+						}
 							if (mob_type == "warrior")
 							{					
 								 damage = (strength + enemies[counter].return_damage()) - range;
 							}
-							if (mob_type == "shaman")
+							if (mob_type == "shaman" || mob_type == "mage")
 							{
 							    damage = (intellect + enemies[counter].return_damage());
 							}

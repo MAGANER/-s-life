@@ -126,12 +126,13 @@ void Enemy::fuck_away()
 }
 void Enemy::generate()
 {
-	int type_number = 1 + rand() % 2;
+	int type_number = 1 + rand() % 3;
 	if (type_number == 1)
 	{
 		vision_range = 5;
 		current_x = 2 + rand() % 170;
 		current_y = 2 + rand() % 50;
+		health = 5 + rand() % 10;
 		type = "Goblin";
 	    int class_number = 1 + rand() & 2;
 		if (class_number == 1)
@@ -164,6 +165,7 @@ void Enemy::generate()
 		type = "Ork";
 		current_x = 2 + rand() % 170;
 		current_y = 2 + rand() % 50;
+		health = 10 + rand() % 20;
 		int class_number = 1 + rand() % 2;
 		if (class_number == 1)
 		{
@@ -185,6 +187,45 @@ void Enemy::generate()
 			strength = 6;
 			armor = 2 + rand() % 5;
 			damage = 2 + rand() % 6;
+		}
+	}
+	if (type_number == 3)
+	{
+		vision_range = 10;
+		type = "Elf";
+		current_x = 2 + rand() % 170;
+		current_y = 2 + rand() % 50;
+		health = 7 + rand() % 14;
+		int class_number = 1 + rand() % 3;
+		if (class_number == 1)
+		{
+			mob_class = "warrior";
+			mana = 0;
+			speed = 1;
+			intellect = 15;
+			strength = 10;
+			armor = 5 + rand() % 20;
+			damage = 4 + rand() % 10;
+		}
+		if (class_number == 2)
+		{
+			mob_class = "mage";
+			mana = 0;
+			speed = 1;
+			intellect = 15;
+			strength = 5;
+			armor = 1 + rand() % 10;
+			damage = 6 + rand() % 15;
+		}
+		if (class_number == 3)
+		{
+			mob_class = "ranger";
+			mana = 0;
+			speed = 2;
+			intellect = 15;
+			strength = 10;
+			armor = 5 + rand() % 10;
+			damage = 5 + rand() % 10;
 		}
 	}
 }
