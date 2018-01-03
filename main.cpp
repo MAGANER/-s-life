@@ -16,7 +16,7 @@ int deads = 0;
 int turn = 0;
 bool GAME = true;
 bool clear_screen = true;
-
+void game_over();
 void monsters_move(vector<Enemy>& enemies);
 void draw_hero();
 void draw_monsters(vector<Enemy>& enemies);
@@ -50,14 +50,13 @@ void main()
 	// game cycle
 	while (GAME)
 	{
-			if (clear_screen)
-			{
 				draw_hero();
 				draw_monsters(enemies);
 				draw_objects(creatures);
 				draw_game_info();
 				draw_game_screen();
 				enter_command(creatures, enemies);
+
                 // check monsters' energy
 				for (int counter = 0; counter < enemies.size(); counter++)
 				{
@@ -119,8 +118,7 @@ void main()
 					}
 				}
 				monsters_move(enemies);
-				system("cls");
-			}
+
 			// die if hero hasn't energy else decrease energy
 			if (hero.energy > 0)
 			{
@@ -141,7 +139,13 @@ void main()
 				hero.increase_energy();
 			}
 		
+	    // check it
+		game_over();
 		turn++;
+		if (clear_screen)
+		{
+			system("cls");
+		}
 	}
 
 	_getch();
@@ -573,3 +577,12 @@ void monsters_move(vector<Enemy>& enemies)
 		}
 	}
 }
+void game_over()
+{
+	if (hero.return_health() <= 0)
+	{
+		cout << "GAME OVER!";
+		clear_screen = false;
+	}
+}
+
