@@ -1,5 +1,20 @@
 #include "Player.h"
 
+void Player::get_damaged(int damage)
+{
+	if(armor > 0)
+	{
+		armor = armor - damage;
+		if (armor < 0)
+		{
+			armor = 0;
+		}
+	}
+	else if (armor == 0 || armor < 0)
+	{
+		health = health - damage;
+	}
+}
 void Player::increase_energy()
 {
 	energy++;

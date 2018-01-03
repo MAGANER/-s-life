@@ -1,35 +1,64 @@
 #include "Enemy.h"
 
+int Enemy::damage_target()
+{
+	return damage;
+}
 void Enemy::detect_target(int target_x,int target_y)
 {
 	if (target_y == return_y() && target_x > return_x())
 	{
-		//target is righter
-		direction_is_choosed = true;
-		direction = 3;
+		unsigned int range = return_x() - target_x;
+		if (range <= vision_range)
+		{
+			//target is righter
+			direction_is_choosed = true;
+			direction = 3;
+			see_target = true;
+		}
 	}
 	else if (target_y == return_y() && target_x < return_x())
 	{
-		// target is lefter
-		direction_is_choosed = true;
-		direction = 4;
+		unsigned int range = return_x() - target_x;
+		if (range <= vision_range)
+		{
+			// target is lefter
+			direction_is_choosed = true;
+			direction = 4;
+			see_target = true;
+		}
 	}
 	else if (target_x == return_x() && target_y > return_y())
 	{
-		//target is under
-		direction_is_choosed = true;
-		direction = 2;
+		unsigned int range = return_y() - target_y;
+		if (range <= vision_range)
+		{
+			//target is under
+			direction_is_choosed = true;
+			direction = 2;
+			see_target = true;
+		}
 	}
 	else if (target_x == return_x() && target_y < return_y())
 	{
-		//target is above
-		direction_is_choosed = true;
-		direction = 1;
+		unsigned int range = return_y() - target_y;
+		if (range <= vision_range)
+		{
+			//target is above
+			direction_is_choosed = true;
+			direction = 1;
+			see_target = true;
+		}
 	}
 	else
 	{
 		direction_is_choosed = false;
+		see_target = false;
 	}
+}
+string Enemy::get_class()
+{
+	return mob_class;
 }
 int Enemy::get_health()
 {
@@ -112,8 +141,8 @@ void Enemy::generate()
 			speed = 2;
 			intellect = 5;
 			strength = 10;
-			armor = 10 + rand() % 50;
-			damage = 10 + rand() % 60;
+			armor = 1 + rand() % 5;
+			damage = 2 + rand() % 7;
 
 		}
 		if (class_number == 2)
@@ -124,8 +153,8 @@ void Enemy::generate()
 			speed = 2;
 			intellect = 10;
 			strength = 0;
-			armor = 10 + rand() % 30;
-			damage = 20 + rand() % 70;
+			armor = 1 + rand() % 5;
+			damage = 2 + rand() % 13;
 
 		}
 	}
@@ -143,8 +172,8 @@ void Enemy::generate()
 			speed = 1;
 			intellect = 4;
 			strength = 20;
-			armor = 10 + rand() % 80;
-			damage = 30 + rand() % 90;
+			armor = 1 + rand() % 8;
+			damage = 3 + rand() % 9;
 
 		}
 		if (class_number == 2)
@@ -154,8 +183,8 @@ void Enemy::generate()
 			speed = 1;
 			intellect = 15;
 			strength = 6;
-			armor = 20 + rand() % 50;
-			damage = 20 + rand() % 60;
+			armor = 2 + rand() % 5;
+			damage = 2 + rand() % 6;
 		}
 	}
 }

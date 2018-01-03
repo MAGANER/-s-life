@@ -9,6 +9,7 @@ protected:
 	int current_x, current_y,old_x,old_y, health,mana,armor,damage;
 	int strength, speed, intellect;
 public:
+	void get_damaged(int damage);
 	void increase_energy();
 	void increase_speed();
 	void increase_intellect();
