@@ -9,6 +9,7 @@ protected:
 	int current_x, current_y,old_x,old_y, health,mana,armor,damage;
 	int strength, speed, intellect;
 public:
+	void become_fucking_smart();
 	void get_damaged(int damage);
 	void increase_energy();
 	void increase_speed();
@@ -16,8 +17,10 @@ public:
 	void increase_strength();
 	int get_energy();
 	int get_speed();
+	int get_mana();
 	int get_intellect();
 	int get_strength();
+	void set_mana(int mana);
 	void set_armor(int armor);
 	void set_damage(int damage);
 	void set_energy(int energy);

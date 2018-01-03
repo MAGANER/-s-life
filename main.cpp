@@ -299,6 +299,12 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 						hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
 						invt.delete_item(item_number);
 					}
+					if (invt.get_type(item_number) == "mana_potion")
+					{
+						hero.set_mana(invt.get_mana(item_number));
+						hero.taken_items_weight = hero.taken_items_weight - invt.get_weight(item_number);
+						invt.delete_item(item_number);
+					}
 				}
 				if (using_type == "equip")
 				{
@@ -320,15 +326,27 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 		}
 		else if (command == "throw")
 		{
-			int item_number;
-			cout << "enter item number you want to throw:";
-			cin >> item_number;
-			if (invt.get_inventory_size() < item_number)
+			string to_do;
+			cout << "do you want to use magic or throw item:";
+			cin >> to_do;
+			if(to_do == "magic")
 			{
-				cout << "you have no " << item_number << "!";
-				enter_command(creatures, enemies);
-			}
-			else {
+				string spell;
+				cout << "enter spell you want to cast:";
+				cin >> spell;
+				if (spell == "DEATH")
+				{
+					for (int counter = 0; counter < enemies.size(); counter++)
+					{
+						enemies[counter].set_health(-enemies[counter].get_health());
+						if (enemies[counter].get_health() == 0)
+						{
+							deads++;
+						}
+					}
+					enter_command(creatures, enemies);
+				}
+
 				string direct;
 				cout << "enter direction:";
 				cin >> direct;
@@ -370,12 +388,55 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 									break;
 								}
 							}
-							int target_x = enemies[target_number].return_x();
-							int target_y = enemies[target_number].return_y();
-							unsigned int range = target_y - hero.return_y();
-							int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
-							enemies[target_number].set_health(damage);
-							invt.delete_item(item_number);
+							int damage = 0;
+							if (spell == "fire_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 5 + hero.get_intellect();
+									hero.set_mana(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "frost_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 3 + hero.get_intellect();
+									hero.set_mana(-5);
+									enemies[target_number].set_damage(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "heal")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_health(5+hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "armor")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_armor(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							enemies[target_number].set_health(-damage);
 							if (enemies[target_number].get_health() <= 0)
 							{
 								deads++;
@@ -425,12 +486,55 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 									break;
 								}
 							}
-							int target_x = enemies[target_number].return_x();
-							int target_y = enemies[target_number].return_y();
-							unsigned int range = target_y - hero.return_y();
-							int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+							int damage = 0;
+							if (spell == "fire_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 5 + hero.get_intellect();
+									hero.set_mana(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "frost_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 3 + hero.get_intellect();
+									hero.set_mana(-5);
+									enemies[target_number].set_damage(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "heal")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_health(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "armor")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_armor(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
 							enemies[target_number].set_health(-damage);
-							invt.delete_item(item_number);
 							if (enemies[target_number].get_health() <= 0)
 							{
 								deads++;
@@ -481,12 +585,55 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 									break;
 								}
 							}
-							int target_x = enemies[target_number].return_x();
-							int target_y = enemies[target_number].return_y();
-							unsigned int range = target_x - hero.return_x();
-							int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+							int damage = 0;
+							if (spell == "fire_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 5 + hero.get_intellect();
+									hero.set_mana(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "frost_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 3 + hero.get_intellect();
+									hero.set_mana(-5);
+									enemies[target_number].set_damage(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "heal")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_health(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "armor")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_armor(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
 							enemies[target_number].set_health(-damage);
-							invt.delete_item(item_number);
 							if (enemies[target_number].get_health() <= 0)
 							{
 								deads++;
@@ -536,12 +683,55 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 									break;
 								}
 							}
-							int target_x = enemies[target_number].return_x();
-							int target_y = enemies[target_number].return_y();
-							unsigned int range = target_x - hero.return_x();
-							int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+							int damage = 0;
+							if (spell == "fire_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 5 + hero.get_intellect();
+									hero.set_mana(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "frost_boll")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									damage = 3 + hero.get_intellect();
+									hero.set_mana(-5);
+									enemies[target_number].set_damage(-5);
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "heal")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_health(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
+							if (spell == "armor")
+							{
+								if (hero.get_mana() >= 5)
+								{
+									hero.set_armor(5 + hero.get_intellect());
+								}
+								else {
+									cout << "not enough mana!";
+									enter_command(creatures, enemies);
+								}
+							}
 							enemies[target_number].set_health(-damage);
-							invt.delete_item(item_number);
 							if (enemies[target_number].get_health() <= 0)
 							{
 								deads++;
@@ -554,10 +744,251 @@ void enter_command(vector<Object>& creatures, vector<Enemy>& enemies)
 					}
 				}
 			}
+			else
+			{
+				int item_number;
+				cout << "enter item number you want to throw:";
+				cin >> item_number;
+				if (invt.get_inventory_size() < item_number)
+				{
+					cout << "you have no " << item_number << "!";
+					enter_command(creatures, enemies);
+				}
+				else {
+					string direct;
+					cout << "enter direction:";
+					cin >> direct;
+					if (direct == "up")
+					{
+						vector<int> x_poses;
+						vector<int> y_poses;
+						int enemy_count = 0;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							if (hero.return_x() == enemies[counter].return_x() && hero.return_y() > enemies[counter].return_y() && enemies[counter].get_health() > 0)
+							{
+								enemy_count++;
+								x_poses.push_back(enemies[counter].return_x());
+								y_poses.push_back(enemies[counter].return_y());
+							}
+						}
+						if (enemy_count > 0)
+						{
+							cout << " at this direction you have " << enemy_count << endl;
+							int enemy_number;
+							cout << "enter enemy number you want to attack:";
+							cin >> enemy_number;
+							if (enemy_number > enemy_count)
+							{
+								cout << "there is not so much enemies!" << endl;
+								enter_command(creatures, enemies);
+							}
+							else
+							{
+								int target_number;
+								for (int counter = 0; counter < enemies.size(); counter++)
+								{
+									int x = x_poses[enemy_number];
+									int y = y_poses[enemy_number];
+									if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+									{
+										target_number = counter;
+										break;
+									}
+								}
+								int target_x = enemies[target_number].return_x();
+								int target_y = enemies[target_number].return_y();
+								unsigned int range = target_y - hero.return_y();
+								int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+								enemies[target_number].set_health(damage);
+								invt.delete_item(item_number);
+								if (enemies[target_number].get_health() <= 0)
+								{
+									deads++;
+								}
+							}
+						}
+						else {
+							cout << " at this direction no enemies!" << endl;
+							enter_command(creatures, enemies);
+						}
+					}
+					else if (direct == "down")
+					{
+						vector<int> x_poses;
+						vector<int> y_poses;
+						int enemy_count = 0;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							if (hero.return_x() == enemies[counter].return_x() && hero.return_y() < enemies[counter].return_y() && enemies[counter].get_health() > 0)
+							{
+								enemy_count++;
+								x_poses.push_back(enemies[counter].return_x());
+								y_poses.push_back(enemies[counter].return_y());
+							}
+						}
+						if (enemy_count > 0)
+						{
+							cout << " at this direction you have " << enemy_count << endl;
+							int enemy_number;
+							cout << "enter enemy number you want to attack:";
+							cin >> enemy_number;
+							if (enemy_number > enemy_count)
+							{
+								cout << "there is not so much enemies!" << endl;
+								enter_command(creatures, enemies);
+							}
+							else
+							{
+								int target_number;
+								for (int counter = 0; counter < enemies.size(); counter++)
+								{
+									int x = x_poses[enemy_number];
+									int y = y_poses[enemy_number];
+									if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+									{
+										target_number = counter;
+										break;
+									}
+								}
+								int target_x = enemies[target_number].return_x();
+								int target_y = enemies[target_number].return_y();
+								unsigned int range = target_y - hero.return_y();
+								int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+								enemies[target_number].set_health(-damage);
+								invt.delete_item(item_number);
+								if (enemies[target_number].get_health() <= 0)
+								{
+									deads++;
+								}
+							}
+						}
+						else {
+							cout << " at this direction no enemies!" << endl;
+							enter_command(creatures, enemies);
+						}
+
+					}
+					else if (direct == "right")
+					{
+						vector<int> x_poses;
+						vector<int> y_poses;
+						int enemy_count = 0;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							if (hero.return_x() < enemies[counter].return_x() && hero.return_y() == enemies[counter].return_y() && enemies[counter].get_health() > 0)
+							{
+								enemy_count++;
+								x_poses.push_back(enemies[counter].return_x());
+								y_poses.push_back(enemies[counter].return_y());
+							}
+						}
+						if (enemy_count > 0)
+						{
+							cout << " at this direction you have " << enemy_count << endl;
+							int enemy_number;
+							cout << "enter enemy number you want to attack:";
+							cin >> enemy_number;
+							if (enemy_number > enemy_count)
+							{
+								cout << "there is not so much enemies!" << endl;
+								enter_command(creatures, enemies);
+							}
+							else
+							{
+								int target_number;
+								for (int counter = 0; counter < enemies.size(); counter++)
+								{
+									int x = x_poses[enemy_number];
+									int y = y_poses[enemy_number];
+									if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+									{
+										target_number = counter;
+										break;
+									}
+								}
+								int target_x = enemies[target_number].return_x();
+								int target_y = enemies[target_number].return_y();
+								unsigned int range = target_x - hero.return_x();
+								int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+								enemies[target_number].set_health(-damage);
+								invt.delete_item(item_number);
+								if (enemies[target_number].get_health() <= 0)
+								{
+									deads++;
+								}
+							}
+						}
+						else {
+							cout << " at this direction no enemies!" << endl;
+							enter_command(creatures, enemies);
+						}
+					}
+					else if (direct == "left")
+					{
+						vector<int> x_poses;
+						vector<int> y_poses;
+						int enemy_count = 0;
+						for (int counter = 0; counter < enemies.size(); counter++)
+						{
+							if (hero.return_x() > enemies[counter].return_x() && hero.return_y() == enemies[counter].return_y() && enemies[counter].get_health() > 0)
+							{
+								enemy_count++;
+								x_poses.push_back(enemies[counter].return_x());
+								y_poses.push_back(enemies[counter].return_y());
+							}
+						}
+						if (enemy_count > 0)
+						{
+							cout << " at this direction you have " << enemy_count << endl;
+							int enemy_number;
+							cout << "enter enemy number you want to attack:";
+							cin >> enemy_number;
+							if (enemy_number > enemy_count)
+							{
+								cout << "there is not so much enemies!" << endl;
+								enter_command(creatures, enemies);
+							}
+							else
+							{
+								int target_number;
+								for (int counter = 0; counter < enemies.size(); counter++)
+								{
+									int x = x_poses[enemy_number];
+									int y = y_poses[enemy_number];
+									if (x == enemies[counter].return_x() && y == enemies[counter].return_y())
+									{
+										target_number = counter;
+										break;
+									}
+								}
+								int target_x = enemies[target_number].return_x();
+								int target_y = enemies[target_number].return_y();
+								unsigned int range = target_x - hero.return_x();
+								int damage = (invt.get_damage(item_number) + hero.get_strength() + hero.return_damage()) - (range % 2);
+								enemies[target_number].set_health(-damage);
+								invt.delete_item(item_number);
+								if (enemies[target_number].get_health() <= 0)
+								{
+									deads++;
+								}
+							}
+						}
+						else {
+							cout << " at this direction no enemies!" << endl;
+							enter_command(creatures, enemies);
+						}
+					}
+				}
+			}
+			
 		}
 		else if (command == "power")
 		{
 			hero.set_damage(666);
+			hero.set_health(666); 
+			hero.set_mana(666);
+			hero.become_fucking_smart();
 		}
 		else {
 			cout << "no " << command << " command!";

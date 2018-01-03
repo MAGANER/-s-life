@@ -1,5 +1,9 @@
 #include "Player.h"
 
+void Player::become_fucking_smart()
+{
+	intellect = 666;
+}
 void Player::get_damaged(int damage)
 {
 	if(armor > 0)
@@ -43,6 +47,10 @@ int Player::get_speed()
 {
 	return speed;
 }
+int Player::get_mana()
+{
+	return mana;
+}
 int Player::get_intellect()
 {
 	return intellect;
@@ -62,6 +70,10 @@ void Player::set_energy(int energy)
 void Player::set_health(int health)
 {
 	this->health = this->health + health;
+}
+void Player::set_mana(int mana)
+{
+	this->mana = this->mana + mana;
 }
 void Player::die()
 {

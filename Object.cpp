@@ -22,6 +22,10 @@ int Object::get_weight()
 {
 	return weight;
 }
+int Object::get_mana()
+{
+	return mana;
+}
 int Object::get_energy()
 {
 	return energy;
@@ -63,7 +67,7 @@ void Object::generate()
 		weight = 1;
 		damage = 1; // yeap, we can use food as weapon and armor
 		armor = 1;
-		int food_number = 1 + rand() % 9;
+		int food_number = 1 + rand() % 10;
 		if (food_number == 1)
 		{
 			type = "food";
@@ -146,6 +150,16 @@ void Object::generate()
 			health = 1;
 			armor = 1;
 			energy = 1 + rand() & 2;
+			view = 'v';
+		}
+		if (food_number == 10)
+		{
+			type = "mana_potion";
+			weight = 1;
+			health = 1;
+			armor = 1;
+			energy = 1;
+			mana = 40 + rand() % 80;
 			view = 'v';
 		}
 	}

@@ -9,11 +9,13 @@ private:
 	string type;
 	int energy;
 	int weight;
+	int mana;
 public:
 	void become_used();
 	bool show;
 	bool equiped;
 	void fuck_away();
+	int get_mana();
 	int get_weight();
 	int get_energy();
 	int get_x_pos();

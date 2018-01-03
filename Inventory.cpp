@@ -32,6 +32,10 @@ int Inventory::get_damage(int item_number)
 {
 	return items[item_number].get_damage();
 }
+int Inventory::get_mana(int item_number)
+{
+	return items[item_number].get_mana();
+}
 int Inventory::get_armor(int item_number)
 {
 	return items[item_number].get_armor();
